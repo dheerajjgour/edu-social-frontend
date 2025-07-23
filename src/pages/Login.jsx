@@ -1,42 +1,77 @@
-import { useContext, useState } from 'react';
-import { UserContext } from '../context/UserContext';
+import { useState, useContext } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { UserContext } from '../context/UserContext';
+import axios from 'axios';
 
 const Login = () => {
   const { login } = useContext(UserContext);
-  const [form, setForm] = useState({ email: '', password: '' });
   const navigate = useNavigate();
 
-  const handleChange = (e) => setForm({ ...form, [e.target.name]: e.target.value });
+  const [form, setForm] = useState({
+    email: '',
+    password: ''
+  });
 
-  const handleSubmit = (e) => {
+  const [errors, setErrors] = useState({});
+  const [isSubmitting, setIsSubmitting] = useState(false);
+
+  const handleChange = (e) => {
+    setForm({ ...form, [e.target.name]: e.target.value });
+    setErrors({ ...errors, [e.target.name]: '' });
+  };
+
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    const stored = JSON.parse(localStorage.getItem('edu-user'));
-if (stored && stored.email === form.email && stored.password === form.password) {
-  login(stored);
+    setIsSubmitting(true);
 
-  if (stored.role === 'college') navigate('/dashboard');
-  else if (stored.role === 'teacher') navigate('/dashboard');
-  else navigate('/dashboard');
-}
+    try {
+      const response = await axios.post('https://education.jmbliss.com/api/login', {
+        ...form,
+        token: 'web-react'
+      });
 
+      if (response.data.user) {
+        login(response.data.user);
+        navigate('/dashboard');
+      }
+    } catch (error) {
+      if (error.response?.status === 401) {
+        setErrors({ general: 'Invalid email or password' });
+      } else {
+        setErrors({ general: 'Login failed. Please try again.' });
+      }
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
   return (
-    <div style={styles.container}>
-      <h2>Login</h2>
-      <form onSubmit={handleSubmit} style={styles.form}>
-        <input type="email" name="email" placeholder="Email" onChange={handleChange} required />
-        <input type="password" name="password" placeholder="Password" onChange={handleChange} required />
-        <button type="submit">Login</button>
-      </form>
+    <div className="login">
+      <div style={{ maxWidth: 400, margin: 'auto', padding: 20 }}>
+        <h2>Login</h2>
+        {errors.general && <div style={{ color: 'red' }}>{errors.general}</div>}
+        <form onSubmit={handleSubmit} style={{ display: 'flex', flexDirection: 'column', gap: 10 }}>
+          <input
+            type="email"
+            name="email"
+            placeholder="Email"
+            onChange={handleChange}
+            value={form.email}
+          />
+          <input
+            type="password"
+            name="password"
+            placeholder="Password"
+            onChange={handleChange}
+            value={form.password}
+          />
+          <button type="submit" disabled={isSubmitting}>
+            {isSubmitting ? 'Logging in...' : 'Login'}
+          </button>
+        </form>
+      </div>
     </div>
   );
-};
-
-const styles = {
-  container: { maxWidth: 400, margin: 'auto', padding: 20 },
-  form: { display: 'flex', flexDirection: 'column', gap: '10px' },
 };
 
 export default Login;

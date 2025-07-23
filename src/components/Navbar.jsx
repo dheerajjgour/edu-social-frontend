@@ -13,17 +13,17 @@ const Navbar = () => {
 
   return (
     <nav style={styles.nav}>
-      <Link to="/" style={styles.brand}>EduSocial</Link>
-      <div>
+      <Link to="/" style={styles.brand}>EduCircle</Link>
+      <div style={styles.links}>
         {!user ? (
           <>
             <Link to="/login" style={styles.link}>Login</Link>
-            <Link to="/register" style={styles.link}>Register</Link>
+            <Link to="/register" style={styles.registerBtn}>Register</Link>
           </>
         ) : (
           <>
             <span style={styles.user}>Hi, {user.name}</span>
-            <button onClick={handleLogout} style={styles.button}>Logout</button>
+            <button onClick={handleLogout} style={styles.logoutBtn}>Logout</button>
           </>
         )}
       </div>
@@ -33,17 +33,56 @@ const Navbar = () => {
 
 const styles = {
   nav: {
-    padding: '10px 20px',
+    padding: '12px 24px',
     background: '#007bff',
-    color: 'white',
+    color: '#fff',
     display: 'flex',
     justifyContent: 'space-between',
     alignItems: 'center',
+    boxShadow: '0 2px 6px rgba(0,0,0,0.1)',
   },
-  brand: { fontSize: '20px', fontWeight: 'bold', color: 'white', textDecoration: 'none' },
-  link: { marginLeft: '15px', color: 'white', textDecoration: 'none' },
-  user: { marginRight: '10px' },
-  button: { background: 'white', border: 'none', padding: '5px 10px', borderRadius: '5px' }
+  brand: {
+    fontSize: '22px',
+    fontWeight: 'bold',
+    color: '#fff',
+    textDecoration: 'none',
+  },
+  links: {
+    display: 'flex',
+    alignItems: 'center',
+    gap: '15px',
+  },
+  link: {
+    color: '#fff',
+    textDecoration: 'none',
+    fontSize: '16px',
+    padding: '6px 12px',
+    transition: 'background 0.2s ease',
+    borderRadius: '4px',
+  },
+  registerBtn: {
+    color: '#007bff',
+    backgroundColor: '#fff',
+    textDecoration: 'none',
+    fontSize: '16px',
+    padding: '6px 12px',
+    borderRadius: '4px',
+    transition: 'all 0.3s ease',
+  },
+  user: {
+    marginRight: '10px',
+    fontSize: '16px',
+  },
+  logoutBtn: {
+    backgroundColor: '#fff',
+    color: '#007bff',
+    border: 'none',
+    padding: '6px 12px',
+    borderRadius: '4px',
+    fontSize: '16px',
+    cursor: 'pointer',
+    transition: 'all 0.3s ease',
+  },
 };
 
 export default Navbar;

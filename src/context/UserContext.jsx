@@ -1,64 +1,51 @@
 import { createContext, useEffect, useState } from "react";
+import axios from 'axios';
+
 export const UserContext = createContext();
 
 export const UserProvider = ({ children }) => {
   const [user, setUser] = useState(null);
+  const [loading, setLoading] = useState(true);
 
-  // Load logged-in user safely
   useEffect(() => {
-    const storedUser = localStorage.getItem("loggedInUser");
-    if (storedUser) {
-      try {
-        setUser(JSON.parse(storedUser));
-      } catch (error) {
-        console.error("Invalid JSON in localStorage:", error);
-        localStorage.removeItem("loggedInUser"); // clean it up
+    const initializeAuth = async () => {
+      const storedUser = localStorage.getItem("loggedInUser");
+      
+      if (storedUser) {
+        try {
+          const parsedUser = JSON.parse(storedUser);
+          
+          // Optional: Verify token is still valid with API
+          // await axios.get('/api/validate-token');
+          
+          setUser(parsedUser);
+          axios.defaults.headers.common['Authorization'] = `Bearer ${parsedUser.token}`;
+        } catch (error) {
+          console.error("Invalid user data:", error);
+          localStorage.removeItem("loggedInUser");
+        }
       }
-    }
+      
+      setLoading(false);
+    };
+
+    initializeAuth();
   }, []);
 
- const register = async (userData) => {
-  try {
-    const response = await fetch("https://education.jmbliss.com/api/register", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify(userData),
-    });
-
-    const data = await response.json();
-
-    if (response.ok) {
-      alert("Registration successful!");
-    } else {
-      // Laravel usually returns 422 for validation errors
-      if (response.status === 422 && data.errors) {
-        const messages = Object.values(data.errors)
-          .flat()
-          .join("\n");
-        alert(messages);
-      } else {
-        alert(data.message || "Registration failed");
-      }
-    }
-  } catch (err) {
-    console.error(err);
-    alert("Something went wrong. Please try again.");
-  }
-};
-
-
-  const login = (userData) => {
+  const login = async (userData) => {
     setUser(userData);
     localStorage.setItem("loggedInUser", JSON.stringify(userData));
+    axios.defaults.headers.common['Authorization'] = `Bearer ${userData.token}`;
   };
 
   const logout = () => {
     setUser(null);
     localStorage.removeItem("loggedInUser");
+    delete axios.defaults.headers.common['Authorization'];  
   };
 
   return (
-    <UserContext.Provider value={{ user, login, logout, register }}>
+    <UserContext.Provider value={{ user, login, logout, loading }}>
       {children}
     </UserContext.Provider>
   );

@@ -5,6 +5,7 @@ import Home from './pages/Home';
 import PrivateRoute from './components/PrivateRoute';
 import Navbar from './components/Navbar';
 import Dashboard from './pages/Dashboard';
+import Verify from './pages/Verify';
 
 const App = () => {
   return (
@@ -14,6 +15,7 @@ const App = () => {
       <Route path="/register" element={<Register />} />
       <Route path="/login" element={<Login />} />
       <Route path='/' element={<Home/>}/>
+      <Route path='/verfiy/:userId' element={<Verify/>}/>
       <Route
         path="/dashboard"
         element={

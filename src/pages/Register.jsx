@@ -1,11 +1,11 @@
 import { useState, useContext } from 'react';
-import { UserContext } from '../context/UserContext';
 import { useNavigate } from 'react-router-dom';
-import "../App.css"
+import { UserContext } from '../context/UserContext';
+import "../App.css";
 import axios from 'axios';
 
 const Register = () => {
-  const { register } = useContext(UserContext);
+  const { login } = useContext(UserContext);
   const navigate = useNavigate();
 
   const [form, setForm] = useState({
@@ -13,40 +13,30 @@ const Register = () => {
     email: '',
     phone: '',
     type: 'student',
-    password: ''
+    password: '',
+    password_confirmation: ''
   });
 
   const [errors, setErrors] = useState({});
+  const [isSubmitting, setIsSubmitting] = useState(false);
 
   const validate = () => {
     const newErrors = {};
 
-    if (!form.name.trim()) {
-      newErrors.name = 'Name is required';
-    } else if (form.name.length > 50) {
-      newErrors.name = 'Name should not exceed 50 characters';
-    }
+    if (!form.name.trim()) newErrors.name = 'Name is required';
+    else if (form.name.length > 50) newErrors.name = 'Max 50 characters allowed';
 
-    if (!form.email) {
-      newErrors.email = 'Email is required';
-    } else if (!/\S+@\S+\.\S+/.test(form.email)) {
-      newErrors.email = 'Invalid email address';
-    }
+    if (!form.email) newErrors.email = 'Email is required';
+    else if (!/\S+@\S+\.\S+/.test(form.email)) newErrors.email = 'Invalid email';
 
-    if (!form.phone) {
-      newErrors.phone = 'Phone number is required';
-    } else if (!/^\d{10}$/.test(form.phone)) {
-      newErrors.phone = 'Phone number must be 10 digits';
-    }
+    if (!form.phone) newErrors.phone = 'Phone is required';
+    else if (!/^\d{10}$/.test(form.phone)) newErrors.phone = 'Phone must be 10 digits';
 
-    if (!form.password) {
-      newErrors.password = 'Password is required';
-    } else if (form.password.length < 6) {
-      newErrors.password = 'Password must be at least 6 characters';
-    }
+    if (!form.password) newErrors.password = 'Password is required';
+    else if (form.password.length < 6) newErrors.password = 'At least 6 characters required';
 
-    if (!form.type) {
-      newErrors.type = 'Role is required';
+    if (form.password !== form.password_confirmation) {
+      newErrors.password_confirmation = 'Passwords do not match';
     }
 
     setErrors(newErrors);
@@ -55,32 +45,48 @@ const Register = () => {
 
   const handleChange = (e) => {
     setForm({ ...form, [e.target.name]: e.target.value });
-    setErrors({ ...errors, [e.target.name]: '' }); // clear error on change
+    setErrors({ ...errors, [e.target.name]: '' });
   };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-
     if (!validate()) return;
 
+    setIsSubmitting(true);
+    
     try {
       const response = await axios.post('https://education.jmbliss.com/api/register', {
         ...form,
         token: 'web-react'
       });
 
-      register(response.data.user);
-      alert('Registered successfully!');
-      navigate('/login');
+      // Auto-login after successful registration
+if (response.data?.status === true && response.data?.user_id) {
+  navigate(`/verify/${response.data.user_id}`);
+}
+else {
+  alert(response.data.message || 'Unexpected registration response');
+  navigate('/login');
+}
     } catch (error) {
-      console.error('Registration error:', error.response?.data || error.message);
-      alert('Registration failed. Try again.');
+      if (error.response?.status === 422) {
+        const apiErrors = error.response.data.errors || {};
+        const formatted = {};
+        for (let key in apiErrors) {
+          formatted[key] = apiErrors[key][0];
+        }
+        setErrors(formatted);
+      } else {
+        alert(error.response?.data?.message || 'Registration failed. Please try again.');
+      }
+    } finally {
+      setIsSubmitting(false);
     }
   };
 
   return (
-    <div className='register'>
-      <div style={styles.container} className='container'>
+    <div className="register">
+      <div style={styles.container} className="container">
         <h2>Create Account</h2>
         <form onSubmit={handleSubmit} style={styles.form}>
           <input
@@ -119,14 +125,26 @@ const Register = () => {
           />
           {errors.password && <span style={styles.error}>{errors.password}</span>}
 
+          <input
+            type="password"
+            name="password_confirmation"
+            placeholder="Confirm Password"
+            onChange={handleChange}
+            value={form.password_confirmation}
+          />
+          {errors.password_confirmation && (
+            <span style={styles.error}>{errors.password_confirmation}</span>
+          )}
+
           <select name="type" onChange={handleChange} value={form.type}>
             <option value="student">Student</option>
             <option value="teacher">Teacher</option>
             <option value="college">College</option>
           </select>
-          {errors.type && <span style={styles.error}>{errors.type}</span>}
 
-          <button type="submit">Register</button>
+          <button type="submit" disabled={isSubmitting}>
+            {isSubmitting ? 'Registering...' : 'Register'}
+          </button>
         </form>
       </div>
     </div>
@@ -136,7 +154,7 @@ const Register = () => {
 const styles = {
   container: { maxWidth: 400, margin: 'auto', padding: 20 },
   form: { display: 'flex', flexDirection: 'column', gap: '10px' },
-  error: { color: 'red', fontSize: '0.8rem', marginBottom: '-5px' }
+  error: { color: 'red', fontSize: '0.8rem', marginTop: '-5px' }
 };
 
 export default Register;

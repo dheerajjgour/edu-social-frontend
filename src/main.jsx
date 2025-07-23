@@ -7,7 +7,7 @@ import { UserProvider } from './context/UserContext';
 ReactDOM.createRoot(document.getElementById('root')).render(
   <React.StrictMode>
     <BrowserRouter>
-      <UserProvider> {/* ✅ wrap App with UserProvider */}
+      <UserProvider> 
         <App />
       </UserProvider>
     </BrowserRouter>

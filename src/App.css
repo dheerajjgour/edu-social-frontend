@@ -21,6 +21,7 @@ body {
     background-color: #ebe5e5;
     height: 100dvh;
     display: flex;
+    padding: 0 20px;
 
 .container{
       background: #ffffff;
