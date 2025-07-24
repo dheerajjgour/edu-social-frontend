@@ -6,6 +6,9 @@ import PrivateRoute from './components/PrivateRoute';
 import Navbar from './components/Navbar';
 import Dashboard from './pages/Dashboard';
 import Verify from './pages/Verify';
+import StudentDashboard from './components/StudentDashboard';
+import TeacherDashboard from './components/TeacherDashboard';
+import CollegeDashboard from './components/CollegeDashboard';
 
 const App = () => {
   return (
@@ -15,7 +18,10 @@ const App = () => {
       <Route path="/register" element={<Register />} />
       <Route path="/login" element={<Login />} />
       <Route path='/' element={<Home/>}/>
-      <Route path='/verfiy/:userId' element={<Verify/>}/>
+      <Route path='/studentDashboard' element={<StudentDashboard/>}/>
+      <Route path='/teacherDashboard' element={<TeacherDashboard/>}/>
+      <Route path='/collegeDashboard' element={<CollegeDashboard/>}/>
+      <Route path='/verify/:userId' element={<Verify/>}/>
       <Route
         path="/dashboard"
         element={

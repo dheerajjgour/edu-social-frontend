@@ -62,8 +62,9 @@ const Register = () => {
 
       // Auto-login after successful registration
 if (response.data?.status === true && response.data?.user_id) {
-  navigate(`/verify/${response.data.user_id}`);
+  navigate(`/verify/${response.data.user_id}?type=${form.type}`);
 }
+
 else {
   alert(response.data.message || 'Unexpected registration response');
   navigate('/login');

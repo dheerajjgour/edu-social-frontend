@@ -1,10 +1,15 @@
 import { useState } from 'react';
-import { useParams, useNavigate } from 'react-router-dom';
+import { useParams, useNavigate, useLocation } from 'react-router-dom'; 
+
 import axios from 'axios';
+
 
 const Verify = () => {
   const { userId } = useParams();
   const navigate = useNavigate();
+   const location = useLocation(); // ✅ add this
+  const queryParams = new URLSearchParams(location.search); // ✅ parse query
+  const userType = queryParams.get('type'); // ✅ get the role (type)
   const [code, setCode] = useState('');
   const [error, setError] = useState('');
   const [success, setSuccess] = useState(false);
@@ -18,11 +23,15 @@ const Verify = () => {
         verification_code: code
       });
 
-      if (response.data.status === true) {
-        setSuccess(true);
-        alert('Email verified successfully. Please log in.');
-        navigate('/login');
-      } else {
+     if (response.data.status === true) {
+  alert('Email verified successfully!');
+
+  if (userType === 'student') navigate('/studentDashboard');
+  else if (userType === 'teacher') navigate('/teacherDashboard');
+  else if (userType === 'college') navigate('/collegeDashboard');
+  else navigate('/login');
+}
+ else {
         setError('Verification failed. Please check the code.');
       }
     } catch (err) {
