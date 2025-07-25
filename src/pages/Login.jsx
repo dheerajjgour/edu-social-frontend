@@ -69,6 +69,17 @@ const Login = () => {
             {isSubmitting ? 'Logging in...' : 'Login'}
           </button>
         </form>
+
+        {/* ✅ Register Redirect */}
+        <p style={{ marginTop: 15, textAlign: 'center' }}>
+          Don't have an account?{' '}
+          <span
+            onClick={() => navigate('/register')}
+            style={{ color: 'blue', cursor: 'pointer', textDecoration: 'underline' }}
+          >
+            Register
+          </span>
+        </p>
       </div>
     </div>
   );
