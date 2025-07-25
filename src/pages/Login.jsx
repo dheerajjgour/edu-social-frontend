@@ -30,8 +30,17 @@ const Login = () => {
         token: 'web-react'
       });
 
-      if (response.data.user) {
-        login(response.data.user);
+      const { user, token } = response.data;
+
+      if (user && token) {
+        // Save to localStorage
+        localStorage.setItem('user', JSON.stringify(user));
+        localStorage.setItem('token', token);
+
+        // Save to context
+        login(user);
+
+        // Redirect
         navigate('/dashboard');
       }
     } catch (error) {
@@ -57,6 +66,7 @@ const Login = () => {
             placeholder="Email"
             onChange={handleChange}
             value={form.email}
+            required
           />
           <input
             type="password"
@@ -64,6 +74,7 @@ const Login = () => {
             placeholder="Password"
             onChange={handleChange}
             value={form.password}
+            required
           />
           <button type="submit" disabled={isSubmitting}>
             {isSubmitting ? 'Logging in...' : 'Login'}
