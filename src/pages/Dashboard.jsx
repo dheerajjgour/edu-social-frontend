@@ -9,7 +9,7 @@ const Dashboard = () => {
   const { user, logout } = useContext(UserContext);
   const navigate = useNavigate();
 
-  // 🔒 Redirect to login if user is not logged in
+
   useEffect(() => {
     if (!user) {
       navigate('/login');

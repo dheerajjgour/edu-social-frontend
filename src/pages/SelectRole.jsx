@@ -1,10 +1,8 @@
 import React from 'react'
 
-function SelectRole() {
+const SelectRole = () => {
   return (
-    <div>
-      
-    </div>
+    <div>SelectRole</div>
   )
 }
 

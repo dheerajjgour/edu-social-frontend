@@ -15,8 +15,7 @@ export const UserProvider = ({ children }) => {
         try {
           const parsedUser = JSON.parse(storedUser);
           
-          // Optional: Verify token is still valid with API
-          // await axios.get('/api/validate-token');
+         
           
           setUser(parsedUser);
           axios.defaults.headers.common['Authorization'] = `Bearer ${parsedUser.token}`;
