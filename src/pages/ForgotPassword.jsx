@@ -76,70 +76,58 @@ const ForgotPassword = () => {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-blue-100 to-blue-300 flex items-center justify-center">
+    <div className="forgot-container">
       <Toaster position="top-right" />
-      <div className="bg-white rounded-2xl shadow-lg p-8 sm:p-10 w-full max-w-md">
-        <h2 className="text-2xl font-bold text-center text-gray-800 mb-6">
+      <div className="forgot-box">
+        <h2 className="forgot-title">
           {step === 1 && 'Forgot Password'}
           {step === 2 && 'Verify Reset Code'}
           {step === 3 && 'Set New Password'}
         </h2>
 
         {step === 1 && (
-          <form onSubmit={handleEmailSubmit} className="space-y-5">
+          <form onSubmit={handleEmailSubmit} className="forgot-form">
             <input
               type="email"
               placeholder="Enter your registered email"
               value={email}
               onChange={(e) => setEmail(e.target.value)}
               required
-              className="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+              className="forgot-input"
             />
-            <button
-              type="submit"
-              disabled={isSubmitting}
-              className="w-full bg-blue-600 hover:bg-blue-700 text-white py-2 rounded-md disabled:opacity-50"
-            >
+            <button type="submit" disabled={isSubmitting} className="forgot-button blue">
               {isSubmitting ? 'Sending...' : 'Send Reset Link'}
             </button>
           </form>
         )}
 
         {step === 2 && (
-          <form onSubmit={handleCodeVerify} className="space-y-5">
+          <form onSubmit={handleCodeVerify} className="forgot-form">
             <input
               type="text"
               placeholder="Enter the reset code"
               value={resetCode}
               onChange={(e) => setResetCode(e.target.value)}
               required
-              className="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+              className="forgot-input"
             />
-            <button
-              type="submit"
-              disabled={isSubmitting}
-              className="w-full bg-green-600 hover:bg-green-700 text-white py-2 rounded-md disabled:opacity-50"
-            >
+            <button type="submit" disabled={isSubmitting} className="forgot-button green">
               {isSubmitting ? 'Verifying...' : 'Verify Code'}
             </button>
           </form>
         )}
 
         {step === 3 && (
-          <form onSubmit={handlePasswordReset} className="space-y-5">
+          <form onSubmit={handlePasswordReset} className="forgot-form">
             <input
               type="password"
               placeholder="Enter your new password"
               value={newPassword}
               onChange={(e) => setNewPassword(e.target.value)}
               required
-              className="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+              className="forgot-input"
             />
-            <button
-              type="submit"
-              disabled={isSubmitting}
-              className="w-full bg-purple-600 hover:bg-purple-700 text-white py-2 rounded-md disabled:opacity-50"
-            >
+            <button type="submit" disabled={isSubmitting} className="forgot-button purple">
               {isSubmitting ? 'Resetting...' : 'Reset Password'}
             </button>
           </form>

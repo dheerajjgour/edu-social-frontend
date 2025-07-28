@@ -72,3 +72,205 @@ body {
     }
 }
 /* REGISTER CSS END */
+/* LOGIN CSS START */
+/* Login Page */
+.login-page {
+  min-height: 100vh;
+  background: linear-gradient(to bottom right, #dbeafe, #bfdbfe);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+  font-family: 'Segoe UI', sans-serif;
+}
+
+/* Login Box */
+.login-box {
+  background-color: white;
+  padding: 40px;
+  border-radius: 20px;
+  width: 100%;
+  max-width: 400px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+}
+
+/* Title */
+.login-title {
+  text-align: center;
+  font-size: 28px;
+  font-weight: bold;
+  margin-bottom: 30px;
+}
+
+/* Form */
+.login-form .form-group {
+  margin-bottom: 20px;
+}
+
+.login-form label {
+  display: block;
+  font-size: 14px;
+  font-weight: 600;
+  color: #333;
+  margin-bottom: 8px;
+}
+
+.login-form input {
+  width: 100%;
+  padding: 10px 14px;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  font-size: 14px;
+  transition: border 0.2s ease;
+}
+
+.login-form input:focus {
+  outline: none;
+  border-color: #3b82f6;
+}
+
+/* Button */
+.login-button {
+  width: 100%;
+  padding: 12px;
+  background-color: #2563eb;
+  color: white;
+  font-weight: bold;
+  border: none;
+  border-radius: 8px;
+  font-size: 15px;
+  cursor: pointer;
+  transition: background 0.2s ease;
+}
+
+.login-button:hover {
+  background-color: #1d4ed8;
+}
+
+.login-button:disabled {
+  background-color: #93c5fd;
+  cursor: not-allowed;
+}
+
+/* Links */
+.forgot-link {
+  float: right;
+  font-size: 12px;
+  color: #2563eb;
+  cursor: pointer;
+  margin-top: -20px;
+}
+
+.register-text {
+  text-align: center;
+  margin-top: 20px;
+  font-size: 14px;
+}
+
+.register-link {
+  color: #2563eb;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+/* Error */
+.error-box {
+  background-color: #fee2e2;
+  color: #b91c1c;
+  text-align: center;
+  padding: 10px;
+  border-radius: 6px;
+  font-size: 13px;
+  margin-bottom: 20px;
+}
+
+/* LOGIN CSS END */
+/* FORGOT PASS CSS START */
+.forgot-container {
+  min-height: 100vh;
+  background: linear-gradient(to bottom right, #dbeafe, #bfdbfe);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 20px;
+  font-family: 'Segoe UI', sans-serif;
+}
+
+.forgot-box {
+  background: white;
+  padding: 40px;
+  border-radius: 20px;
+  width: 100%;
+  max-width: 400px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+}
+
+.forgot-title {
+  text-align: center;
+  font-size: 24px;
+  font-weight: bold;
+  color: #1f2937;
+  margin-bottom: 25px;
+}
+
+.forgot-form {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+
+.forgot-input {
+  padding: 10px 14px;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  font-size: 14px;
+  transition: border 0.2s ease;
+}
+
+.forgot-input:focus {
+  border-color: #3b82f6;
+  outline: none;
+}
+
+.forgot-button {
+  padding: 12px;
+  border: none;
+  border-radius: 8px;
+  font-weight: bold;
+  color: white;
+  font-size: 15px;
+  cursor: pointer;
+  transition: background 0.2s ease;
+}
+
+.forgot-button:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+/* Color variants */
+.forgot-button.blue {
+  background-color: #2563eb;
+}
+
+.forgot-button.blue:hover {
+  background-color: #1d4ed8;
+}
+
+.forgot-button.green {
+  background-color: #16a34a;
+}
+
+.forgot-button.green:hover {
+  background-color: #15803d;
+}
+
+.forgot-button.purple {
+  background-color: #7c3aed;
+}
+
+.forgot-button.purple:hover {
+  background-color: #6d28d9;
+}
+
+/* FORGOT PASS CSS END */

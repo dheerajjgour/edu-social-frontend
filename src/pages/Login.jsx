@@ -8,11 +8,7 @@ const Login = () => {
   const { login } = useContext(UserContext);
   const navigate = useNavigate();
 
-  const [form, setForm] = useState({
-    email: '',
-    password: ''
-  });
-
+  const [form, setForm] = useState({ email: '', password: '' });
   const [errors, setErrors] = useState({});
   const [isSubmitting, setIsSubmitting] = useState(false);
 
@@ -24,12 +20,12 @@ const Login = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     setIsSubmitting(true);
-    const toastId = toast.loading("Logging in...");
+    const toastId = toast.loading('Logging in...');
 
     try {
       const response = await axios.post('https://education.jmbliss.com/api/login', {
         ...form,
-        token: 'web-react'
+        token: 'web-react',
       });
 
       const { user, token } = response.data;
@@ -38,7 +34,7 @@ const Login = () => {
         localStorage.setItem('user', JSON.stringify(user));
         localStorage.setItem('token', token);
         login(user);
-        toast.success("Login successful!", { id: toastId });
+        toast.success('Login successful!', { id: toastId });
         navigate('/StudentDashboard');
       }
     } catch (error) {
@@ -55,66 +51,51 @@ const Login = () => {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-blue-100 to-blue-300 flex items-center justify-center">
+    <div className="login-page">
       <Toaster position="top-right" />
-     <div className="bg-white rounded-2xl shadow-lg w-full max-w-md p-6 sm:p-8 md:p-10 lg:p-12">
+      <div className="login-box">
+        <h2 className="login-title">Welcome Back 👋</h2>
 
-        <h2 className="text-3xl font-bold text-center text-gray-800 mb-6">Login to Your Account</h2>
+        {errors.general && <div className="error-box">{errors.general}</div>}
 
-        {errors.general && (
-          <div className="text-red-500 text-sm text-center mb-4">{errors.general}</div>
-        )}
-
-        <form onSubmit={handleSubmit} className="space-y-5">
-          <div>
-            <label className="block text-sm font-medium text-gray-700 mb-1">Email</label>
+        <form onSubmit={handleSubmit} className="login-form">
+          <div className="form-group">
+            <label htmlFor="email">Email</label>
             <input
               type="email"
               name="email"
-              placeholder="Enter your email"
-              onChange={handleChange}
               value={form.email}
+              onChange={handleChange}
+              placeholder="you@example.com"
               required
-              className="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
             />
           </div>
 
-          <div>
-            <label className="block text-sm font-medium text-gray-700 mb-1">Password</label>
+          <div className="form-group">
+            <label htmlFor="password">
+              Password
+              <span className="forgot-link" onClick={() => navigate('/forgot-password')}>
+                Forgot Password?
+              </span>
+            </label>
             <input
               type="password"
               name="password"
-              placeholder="Enter your password"
-              onChange={handleChange}
               value={form.password}
+              onChange={handleChange}
+              placeholder="••••••••"
               required
-              className="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
             />
-            <div className="text-right mt-1">
-              <span
-                onClick={() => navigate('/forgot-password')}
-                className="text-blue-600 text-sm hover:underline cursor-pointer"
-              >
-                Forgot Password?
-              </span>
-            </div>
           </div>
 
-          <button
-            type="submit"
-            disabled={isSubmitting}
-            className="w-full bg-blue-600 hover:bg-blue-700 transition-all duration-200 text-white font-semibold py-2 rounded-md disabled:opacity-50"
-          >
+          <button type="submit" className="login-button" disabled={isSubmitting}>
             {isSubmitting ? 'Logging in...' : 'Login'}
           </button>
         </form>
 
-        <p className="text-sm text-center mt-5">
-          Don&apos;t have an account?{' '}
-          <span
-            onClick={() => navigate('/register')}
-            className="text-blue-600 hover:underline cursor-pointer font-medium"
-          >
+        <p className="register-text">
+          Don’t have an account?{' '}
+          <span onClick={() => navigate('/register')} className="register-link">
             Register here
           </span>
         </p>
