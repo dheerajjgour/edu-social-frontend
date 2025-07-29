@@ -25,7 +25,7 @@ const App = () => {
         <Route path="/teacherDashboard" element={<TeacherDashboard />} />
         <Route path="/collegeDashboard" element={<CollegeDashboard />} />
         <Route path="/verify/:userId" element={<Verify />} />
-        <Route
+        <Route 
           path="/dashboard"
           element={
             <PrivateRoute>

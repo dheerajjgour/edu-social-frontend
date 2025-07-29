@@ -35,7 +35,7 @@ const Login = () => {
         localStorage.setItem('token', token);
         login(user);
         toast.success('Login successful!', { id: toastId });
-        navigate('/StudentDashboard');
+        navigate('/Dashboard');
       }
     } catch (error) {
       if (error.response?.status === 401) {
