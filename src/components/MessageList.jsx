@@ -13,6 +13,7 @@ const MessageList = () => {
   return (
     <div>
       <h3>Messages</h3>
+.
       {messages.map((msg, i) => (
         <div key={i} style={styles.msg}>
           <strong>{msg.sender}:</strong> {msg.text}

@@ -10,7 +10,7 @@ const PostCard = ({ post }) => (
 
 const styles = {
   card: {
-    background: "#f0f0f0",
+    background: "#d1bebeff",
     padding: "15px",
     borderRadius: "8px",
     marginBottom: "10px",

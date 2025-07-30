@@ -22,7 +22,7 @@ const Register = () => {
 
   const validate = () => {
     const newErrors = {};
-
+ 
     if (!form.name.trim()) newErrors.name = 'Name is required';
     else if (form.name.length > 50) newErrors.name = 'Max 50 characters allowed';
 

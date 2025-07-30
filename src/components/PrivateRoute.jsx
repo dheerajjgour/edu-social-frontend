@@ -5,7 +5,8 @@ import { UserContext } from '../context/UserContext';
 const PrivateRoute = ({ children }) => {
   const { user } = useContext(UserContext);
 
+
   return user ? children : <Navigate to="/login" replace />;
 };
-
+// this is a text content 
 export default PrivateRoute;

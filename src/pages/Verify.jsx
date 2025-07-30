@@ -7,9 +7,9 @@ import axios from 'axios';
 const Verify = () => {
   const { userId } = useParams();
   const navigate = useNavigate();
-   const location = useLocation(); // ✅ add this
-  const queryParams = new URLSearchParams(location.search); // ✅ parse query
-  const userType = queryParams.get('type'); // ✅ get the role (type)
+   const location = useLocation(); 
+  const queryParams = new URLSearchParams(location.search); 
+  const userType = queryParams.get('type');
   const [code, setCode] = useState('');
   const [error, setError] = useState('');
   const [success, setSuccess] = useState(false);

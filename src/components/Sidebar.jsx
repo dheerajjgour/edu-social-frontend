@@ -1,4 +1,5 @@
 import React from "react";
+import { BiBorderRadius } from "react-icons/bi";
 import { Link } from "react-router-dom";
 
 const Sidebar = () => (
@@ -16,12 +17,13 @@ const Sidebar = () => (
 
 const styles = {
   sidebar: {
-    width: "300px",
+    width: "250px",
     padding: "15px",
     background: "rgb(58 68 141)",
     height: "100vh",
     position: "fixed",
-    color:"#fff"
+    color:"#fff",
+    BiBorderRadius:"0px 20px"
   },
   ul: {
     listStyle: "none",

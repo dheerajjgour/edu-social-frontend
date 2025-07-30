@@ -11,6 +11,7 @@ const UserCard = ({ user, onFollowToggle }) => {
       <button onClick={() => onFollowToggle(user.id)}>
         {user.isFollowing ? "Unfollow" : "Follow"}
       </button>
+ 
     </div>
   );
 };

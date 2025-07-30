@@ -3,7 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import { UserContext } from '../context/UserContext';
 import axios from 'axios';
 import { toast, Toaster } from 'react-hot-toast';
-import { FaEye, FaEyeSlash } from 'react-icons/fa'; // 👈 Add this line
+import { FaEye, FaEyeSlash } from 'react-icons/fa'; 
 
 const Login = () => {
   const { login } = useContext(UserContext);
@@ -12,7 +12,7 @@ const Login = () => {
   const [form, setForm] = useState({ email: '', password: '' });
   const [errors, setErrors] = useState({});
   const [isSubmitting, setIsSubmitting] = useState(false);
-  const [showPassword, setShowPassword] = useState(false); // 👈 For toggling password visibility
+  const [showPassword, setShowPassword] = useState(false); 
 
   const handleChange = (e) => {
     setForm({ ...form, [e.target.name]: e.target.value });
@@ -98,6 +98,7 @@ const Login = () => {
                   transform: 'translateY(-50%)',
                   cursor: 'pointer',
                   color: '#666',
+                  
                 }}
               >
                 {showPassword ? <FaEyeSlash /> : <FaEye />}
